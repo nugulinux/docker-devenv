@@ -40,6 +40,7 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    man \
 	    mdbus2 \
 	    patch \
+	    portaudio19-dev \
 	    qemu-user-static \
 	    sed \
 	    sqlite3 \
