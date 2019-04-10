@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    gdb \
 	    git \
 	    gstreamer1.0-tools \
+	    iputils-ping \
 	    language-pack-en \
 	    libasound2-dev libasound2-dbg \
 	    libconfig-dev libconfig-dbg \
@@ -39,8 +40,10 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    libsqlite3-dev libsqlite3-0-dbg \
 	    man \
 	    mdbus2 \
+	    net-tools \
 	    patch \
 	    portaudio19-dev \
+	    pulseaudio \
 	    qemu-user-static \
 	    sed \
 	    sqlite3 \
