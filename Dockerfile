@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    gstreamer1.0-tools \
 	    iputils-ping \
 	    language-pack-en \
-	    libasound2-dev libasound2-dbg \
+	    libasound2-dev libasound2-dbg libasound2-plugins \
 	    libconfig-dev libconfig-dbg \
 	    libcurl4-openssl-dev libcurl3-dbg \
 	    libglib2.0-dev libglib2.0-0-dbg \
