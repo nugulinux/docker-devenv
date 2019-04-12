@@ -48,6 +48,7 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    sed \
 	    sqlite3 \
 	    tig \
+	    unzip \
 	    vim \
 	    wget \
 	    zsh \
@@ -56,12 +57,18 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 
 COPY dotfiles/.vimrc dotfiles/.zshrc /root/
 
+# oh-my-zsh, vim vundle, protobuf
 RUN chsh -s /bin/zsh root \
 	&& git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
 	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
 	&& ls -la ~/ \
-	&& vim +PluginInstall +qall
+	&& vim +PluginInstall +qall \
+	&& wget https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip \
+	&& unzip protoc-3.7.1-linux-x86_64.zip -d protoc \
+	&& mv protoc/bin/protoc /usr/bin/ \
+	&& mv protoc/include/* /usr/include/ \
+	&& rm -rf protoc*
 
 COPY startup.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/startup.sh"]
