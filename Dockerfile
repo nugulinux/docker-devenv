@@ -20,12 +20,19 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    cmake \
 	    cppcheck \
 	    ctags \
+		curl \
 	    dbus \
+		debianutils \
 	    debhelper \
 	    debootstrap \
 	    devscripts \
 	    dh-autoreconf dh-systemd \
+		diffstat \
+		dnsutils \
+		exuberant-ctags \
+		elfutils \
 	    gdb \
+		gettext \
 	    git \
 	    gstreamer1.0-tools \
 	    iputils-ping \
@@ -41,26 +48,38 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    libssl-dev libssl1.0.0-dbg \
 	    libsqlite3-dev libsqlite3-0-dbg \
 	    man \
+		minicom \
+		moreutils \
 	    mdbus2 \
 	    net-tools \
 	    patch \
+		pkg-config \
 	    portaudio19-dev \
 	    pulseaudio \
 		python-pip \
 	    qemu-user-static \
+		sbuild \
+		schroot \
 	    sed \
 	    sqlite3 \
+		sudo \
 	    tig \
 	    unzip \
 	    vim \
 	    wget \
+		xz-utils \
+		zlib1g-dev \
 	    zsh \
 	    && apt-get clean \
 	    && rm -rf /var/lib/apt/lists/*
 
-COPY dotfiles/.vimrc dotfiles/.zshrc /root/
+COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.gitconfig dotfiles/.tigrc /root/
 
-# oh-my-zsh, vim vundle, grpc(+protobuf)
+# 1. oh-my-zsh, vim vundle
+# 2. grpc(+protobuf)
+# 3. checkpatch
+#    - https://raw.githubusercontent.com/01org/zephyr/master/scripts/checkpatch.pl
+# 4. go
 RUN chsh -s /bin/zsh root \
 	&& git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
 	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
@@ -70,11 +89,8 @@ RUN chsh -s /bin/zsh root \
 	&& wget https://12-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc_1.19.1_amd64.deb -P /tmp \
 	&& wget https://12-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc-dev_1.19.1_amd64.deb -P /tmp/ \
 	&& dpkg -i /tmp/libgrpc*.deb \
-	&& rm -rf /tmp/libgrpc*.deb
-
-# checkpatch
-# https://raw.githubusercontent.com/01org/zephyr/master/scripts/checkpatch.pl
-RUN mkdir /usr/share/codespell \
+	&& rm -rf /tmp/libgrpc*.deb \
+	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/nfs-ganesha/ci-tests/master/checkpatch/checkpatch-to-gerrit-json.py -P /usr/bin/ \
@@ -87,10 +103,8 @@ RUN mkdir /usr/share/codespell \
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
 	&& cat /tmp/0003-gerrit_checkpatch.patch | patch \
-	&& rm /tmp/*.patch
-
-# go
-RUN wget https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz \
+	&& rm /tmp/*.patch \
+	&& wget https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz \
 	&& tar -C /usr/local -xzf go1.12.4.linux-amd64.tar.gz \
 	&& rm go1.12.4.linux-amd64.tar.gz
 
