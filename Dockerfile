@@ -6,7 +6,8 @@ LABEL maintainer="webispy@gmail.com" \
 
 ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=en_US.UTF-8 \
-    LANG=$LC_ALL
+    LANG=$LC_ALL \
+    PATH=$PATH:/usr/local/go/bin
 
 RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    && locale-gen $LC_ALL \
@@ -29,6 +30,7 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    gstreamer1.0-tools \
 	    iputils-ping \
 	    language-pack-en \
+		less \
 	    libasound2-dev libasound2-dbg libasound2-plugins \
 	    libconfig-dev libconfig-dbg \
 	    libcurl4-openssl-dev libcurl3-dbg \
@@ -44,6 +46,7 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    patch \
 	    portaudio19-dev \
 	    pulseaudio \
+		python-pip \
 	    qemu-user-static \
 	    sed \
 	    sqlite3 \
@@ -57,19 +60,40 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 
 COPY dotfiles/.vimrc dotfiles/.zshrc /root/
 
-# oh-my-zsh, vim vundle, protobuf
+# oh-my-zsh, vim vundle, grpc(+protobuf)
 RUN chsh -s /bin/zsh root \
 	&& git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
 	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
-	&& wget https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip \
-	&& unzip protoc-3.7.1-linux-x86_64.zip -d protoc \
-	&& mv protoc/bin/protoc /usr/bin/ \
-	&& mv protoc/include/* /usr/include/ \
-	&& rm -rf protoc*
+	&& wget https://12-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc_1.19.1_amd64.deb -P /tmp \
+	&& wget https://12-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc-dev_1.19.1_amd64.deb -P /tmp/ \
+	&& dpkg -i /tmp/libgrpc*.deb \
+	&& rm -rf /tmp/libgrpc*.deb
 
-COPY startup.sh /usr/bin/
+# checkpatch
+# https://raw.githubusercontent.com/01org/zephyr/master/scripts/checkpatch.pl
+RUN mkdir /usr/share/codespell \
+	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
+	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
+	&& wget --no-check-certificate https://raw.githubusercontent.com/nfs-ganesha/ci-tests/master/checkpatch/checkpatch-to-gerrit-json.py -P /usr/bin/ \
+	&& chmod +x /usr/bin/checkpatch.pl \
+	&& chmod +x /usr/bin/checkpatch-to-gerrit-json.py \
+	&& wget https://raw.githubusercontent.com/nugulinux/docker-devenv/master/patches/0001-checkpatch-add-option-for-excluding-directories.patch -P /tmp/ \
+	&& wget https://raw.githubusercontent.com/nugulinux/docker-devenv/master/patches/0002-ignore_const_struct_warning.patch -P /tmp/ \
+	&& wget https://raw.githubusercontent.com/nugulinux/docker-devenv/master/patches/0003-gerrit_checkpatch.patch -P /tmp/ \
+	&& cd /usr/bin \
+	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
+	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
+	&& cat /tmp/0003-gerrit_checkpatch.patch | patch \
+	&& rm /tmp/*.patch
+
+# go
+RUN wget https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz \
+	&& tar -C /usr/local -xzf go1.12.4.linux-amd64.tar.gz \
+	&& rm go1.12.4.linux-amd64.tar.gz
+
+COPY startup.sh run_checkpatch.sh run_cppcheck.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/startup.sh"]
 CMD ["/bin/zsh"]
