@@ -20,28 +20,28 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    cmake \
 	    cppcheck \
 	    ctags \
-		curl \
+	    curl \
 	    dbus \
-		debianutils \
+	    debianutils \
 	    debhelper \
 	    debootstrap \
 	    devscripts \
 	    dh-autoreconf dh-systemd \
-		diffstat \
-		dnsutils \
-		exuberant-ctags \
-		elfutils \
+	    diffstat \
+	    dnsutils \
+	    exuberant-ctags \
+	    elfutils \
 	    gdb \
-		gettext \
+	    gettext \
 	    git \
 	    gstreamer1.0-tools \
-		gstreamer1.0-plugins-base \
-		gstreamer1.0-plugins-good \
-		gstreamer1.0-plugins-bad \
-		gstreamer1.0-plugins-ugly \
-		iputils-ping \
+	    gstreamer1.0-plugins-base \
+	    gstreamer1.0-plugins-good \
+	    gstreamer1.0-plugins-bad \
+	    gstreamer1.0-plugins-ugly \
+	    iputils-ping \
 	    language-pack-en \
-		less \
+	    less \
 	    libasound2-dev libasound2-dbg libasound2-plugins \
 	    libconfig-dev libconfig-dbg \
 	    libcurl4-openssl-dev libcurl3-dbg \
@@ -52,32 +52,46 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    libssl-dev libssl1.0.0-dbg \
 	    libsqlite3-dev libsqlite3-0-dbg \
 	    man \
-		minicom \
-		moreutils \
+	    minicom \
+	    moreutils \
 	    mdbus2 \
 	    net-tools \
 	    patch \
-		pkg-config \
+	    pkg-config \
 	    portaudio19-dev \
 	    pulseaudio \
-		python-pip \
+	    python-pip \
 	    qemu-user-static \
-		sbuild \
-		schroot \
+	    sbuild \
+	    schroot \
 	    sed \
 	    sqlite3 \
-		sudo \
+	    sudo \
 	    tig \
 	    unzip \
 	    vim \
 	    wget \
-		xz-utils \
-		zlib1g-dev \
+	    xz-utils \
+	    zlib1g-dev \
 	    zsh \
 	    && apt-get clean \
 	    && rm -rf /var/lib/apt/lists/*
 
 COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.gitconfig dotfiles/.tigrc /root/
+
+# gerrit-check
+# - fix flake8 python version issue
+# - add cppcheck option (--enable=all, --quiet)
+# - remove Code-Review: -1
+#RUN pip install --trusted-host pypi.python.org --upgrade pip==9.0.3 \
+#	&& pip install --trusted-host pypi.python.org gerrit-check \
+RUN pip install setuptools \
+	&& pip install wheel \
+	&& pip install gerrit-check \
+	&& sed -i 's/from flake8.engine/from flake8.api.legacy/' /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py \
+	&& sed -i 's/"--quiet"/"--quiet", "--enable=all"/' /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py \
+	&& sed -i 's/review\["labels"\] = {"Code-Review": -1}/ /' /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py \
+	&& touch /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py
 
 # 1. oh-my-zsh, vim vundle
 # 2. grpc(+protobuf)
