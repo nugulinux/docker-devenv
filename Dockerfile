@@ -1,5 +1,5 @@
 
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 LABEL maintainer="webispy@gmail.com" \
       version="0.1" \
       description="development environment for nugulinux"
@@ -9,9 +9,13 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=$LC_ALL \
     PATH=$PATH:/usr/local/go/bin
 
-RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
+RUN apt-get update && apt-get install -y ca-certificates language-pack-en ubuntu-dbgsym-keyring \
 	    && locale-gen $LC_ALL \
 	    && dpkg-reconfigure locales \
+	    && echo "deb http://ddebs.ubuntu.com bionic main restricted universe multiverse" >> /etc/apt/sources.list \
+	    && echo "deb http://ddebs.ubuntu.com bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+	    && echo "deb http://ddebs.ubuntu.com bionic-proposed main restricted universe multiverse" >> etc/apt/sources.list \
+	    && apt-get update \
 	    && apt-get install -y --no-install-recommends \
 	    apt-utils \
 	    binfmt-support \
@@ -42,15 +46,17 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    iputils-ping \
 	    language-pack-en \
 	    less \
-	    libasound2-dev libasound2-dbg libasound2-plugins \
-	    libconfig-dev libconfig-dbg \
-	    libcurl4-openssl-dev libcurl3-dbg \
-	    libglib2.0-dev libglib2.0-0-dbg \
+	    libasound2-dev libasound2-dbgsym libasound2-plugins \
+	    libconfig-dev libconfig9-dbgsym \
+	    libcurl4-openssl-dev libcurl4-dbgsym \
+	    libglib2.0-dev libglib2.0-0-dbgsym \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
-	    libopus-dev libopus-dbg \
-	    libssl-dev libssl1.0.0-dbg \
-	    libsqlite3-dev libsqlite3-0-dbg \
+	    libgrpc++-dev \
+	    libopus-dev libopus-dbg libopus0-dbgsym \
+	    libprotobuf-dev \
+	    libssl-dev libssl1.0.0-dbgsym \
+	    libsqlite3-dev libsqlite3-0-dbgsym \
 	    man \
 	    minicom \
 	    moreutils \
@@ -59,6 +65,8 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    patch \
 	    pkg-config \
 	    portaudio19-dev \
+	    protobuf-compiler \
+	    protobuf-compiler-grpc \
 	    pulseaudio \
 	    python-pip \
 	    qemu-user-static \
@@ -104,10 +112,6 @@ RUN chsh -s /bin/zsh root \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
-	&& wget https://17-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc_1.19.1_amd64.deb -P /tmp \
-	&& wget https://17-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc-dev_1.19.1_amd64.deb -P /tmp/ \
-	&& dpkg -i /tmp/libgrpc*.deb \
-	&& rm -rf /tmp/libgrpc*.deb \
 	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
