@@ -112,6 +112,19 @@ RUN chsh -s /bin/zsh root \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotoc17_3.6.1.3-2_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotoc-dev_3.6.1.3-2_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotobuf17_3.6.1.3-2_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotobuf-lite17_3.6.1.3-2_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotobuf-dev_3.6.1.3-2_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/p/protobuf/protobuf-compiler_3.6.1.3-2_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/protobuf-compiler-grpc_1.16.1-1_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc6_1.16.1-1_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc-dev_1.16.1-1_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc%2b%2b1_1.16.1-1_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc%2b%2b-dev_1.16.1-1_amd64.deb -P /tmp \
+	&& dpkg -i /tmp/*.deb \
+	&& rm /tmp/*.deb \
 	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
