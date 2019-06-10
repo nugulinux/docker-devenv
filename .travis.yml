@@ -1,0 +1,28 @@
+language: generic
+dist: xenial
+sudo: required
+addons:
+  apt:
+    update: true
+    packages:
+    - qemu-user-static
+    - binfmt-support
+services:
+- docker
+install:
+# To use the qemu-arm-static in the docker container, host kernel should
+# enable the foreign architecture.
+- echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json
+- sudo service docker restart
+- update-binfmts --display
+- docker system info
+script:
+- docker build --squash -t nugulinux/devenv:armhf_bionic .
+before_deploy:
+  - docker images
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+deploy:
+  provider: script
+  script: docker push nugulinux/devenv:armhf_bionic
+  on:
+    all_branches: true
