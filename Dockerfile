@@ -9,12 +9,14 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=$LC_ALL \
     PATH=$PATH:/usr/local/go/bin
 
-RUN apt-get update && apt-get install -y ca-certificates language-pack-en ubuntu-dbgsym-keyring \
+RUN apt-get update && apt-get install -y software-properties-common \
+	    ca-certificates language-pack-en ubuntu-dbgsym-keyring \
 	    && locale-gen $LC_ALL \
 	    && dpkg-reconfigure locales \
 	    && echo "deb http://ddebs.ubuntu.com bionic main restricted universe multiverse" >> /etc/apt/sources.list \
 	    && echo "deb http://ddebs.ubuntu.com bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list \
 	    && echo "deb http://ddebs.ubuntu.com bionic-proposed main restricted universe multiverse" >> etc/apt/sources.list \
+	    && add-apt-repository -y ppa:webispy/grpc \
 	    && apt-get update \
 	    && apt-get install -y --no-install-recommends \
 	    apt-utils \
@@ -50,9 +52,9 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en ubuntu
 	    libconfig-dev libconfig9-dbgsym \
 	    libcurl4-openssl-dev libcurl4-dbgsym \
 	    libglib2.0-dev libglib2.0-0-dbgsym \
+	    libgrpc++-dev \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
-	    libgrpc++-dev \
 	    libopus-dev libopus-dbg libopus0-dbgsym \
 	    libprotobuf-dev \
 	    libssl-dev libssl1.0.0-dbgsym \
@@ -112,19 +114,6 @@ RUN chsh -s /bin/zsh root \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotoc17_3.6.1.3-2_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotoc-dev_3.6.1.3-2_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotobuf17_3.6.1.3-2_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotobuf-lite17_3.6.1.3-2_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/p/protobuf/libprotobuf-dev_3.6.1.3-2_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/p/protobuf/protobuf-compiler_3.6.1.3-2_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/protobuf-compiler-grpc_1.16.1-1_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc6_1.16.1-1_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc-dev_1.16.1-1_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc%2b%2b1_1.16.1-1_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/g/grpc/libgrpc%2b%2b-dev_1.16.1-1_amd64.deb -P /tmp \
-	&& dpkg -i /tmp/*.deb \
-	&& rm /tmp/*.deb \
 	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
