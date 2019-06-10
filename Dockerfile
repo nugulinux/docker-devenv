@@ -9,9 +9,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=$LC_ALL \
     PATH=$PATH:/usr/local/go/bin
 
-RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
+RUN apt-get update && apt-get install -y software-properties-common \
+	    ca-certificates language-pack-en \
 	    && locale-gen $LC_ALL \
 	    && dpkg-reconfigure locales \
+	    && add-apt-repository -y ppa:webispy/grpc \
+	    && apt-get update \
 	    && apt-get install -y --no-install-recommends \
 	    apt-utils \
 	    binfmt-support \
@@ -46,9 +49,11 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    libconfig-dev libconfig-dbg \
 	    libcurl4-openssl-dev libcurl3-dbg \
 	    libglib2.0-dev libglib2.0-0-dbg \
+	    libgrpc++-dev \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
 	    libopus-dev libopus-dbg \
+	    libprotobuf-dev \
 	    libssl-dev libssl1.0.0-dbg \
 	    libsqlite3-dev libsqlite3-0-dbg \
 	    man \
@@ -59,6 +64,8 @@ RUN apt-get update && apt-get install -y ca-certificates language-pack-en \
 	    patch \
 	    pkg-config \
 	    portaudio19-dev \
+	    protobuf-compiler \
+	    protobuf-compiler-grpc \
 	    pulseaudio \
 	    python-pip \
 	    qemu-user-static \
@@ -104,10 +111,6 @@ RUN chsh -s /bin/zsh root \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
-	&& wget https://17-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc_1.19.1_amd64.deb -P /tmp \
-	&& wget https://17-181617254-gh.circle-artifacts.com/0/tmp/result/libgrpc-dev_1.19.1_amd64.deb -P /tmp/ \
-	&& dpkg -i /tmp/libgrpc*.deb \
-	&& rm -rf /tmp/libgrpc*.deb \
 	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
