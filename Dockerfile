@@ -132,6 +132,7 @@ RUN chsh -s /bin/zsh root \
 	&& tar -C /usr/local -xzf go1.12.4.linux-amd64.tar.gz \
 	&& rm go1.12.4.linux-amd64.tar.gz
 
+ENV SHELL=/bin/zsh
 COPY startup.sh run_checkpatch.sh run_cppcheck.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/startup.sh"]
 CMD ["/bin/zsh"]
