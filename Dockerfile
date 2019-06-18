@@ -40,6 +40,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
 	    gdb \
 	    gettext \
 	    git \
+	    global \
 	    gstreamer1.0-tools \
 	    gstreamer1.0-plugins-base \
 	    gstreamer1.0-plugins-good \
@@ -89,26 +90,23 @@ RUN apt-get update && apt-get install -y software-properties-common \
 
 COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.gitconfig dotfiles/.tigrc /root/
 
-# gerrit-check
+# 1. gerrit-check
 # - fix flake8 python version issue
 # - add cppcheck option (--enable=all, --quiet)
 # - remove Code-Review: -1
-#RUN pip install --trusted-host pypi.python.org --upgrade pip==9.0.3 \
+# RUN pip install --trusted-host pypi.python.org --upgrade pip==9.0.3 \
 #	&& pip install --trusted-host pypi.python.org gerrit-check \
+# 2. oh-my-zsh, vim vundle
+# 3. checkpatch
+#    - https://raw.githubusercontent.com/01org/zephyr/master/scripts/checkpatch.pl
 RUN pip install setuptools \
 	&& pip install wheel \
 	&& pip install gerrit-check \
 	&& sed -i 's/from flake8.engine/from flake8.api.legacy/' /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py \
 	&& sed -i 's/"--quiet"/"--quiet", "--enable=all"/' /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py \
 	&& sed -i 's/review\["labels"\] = {"Code-Review": -1}/ /' /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py \
-	&& touch /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py
-
-# 1. oh-my-zsh, vim vundle
-# 2. grpc(+protobuf)
-# 3. checkpatch
-#    - https://raw.githubusercontent.com/01org/zephyr/master/scripts/checkpatch.pl
-# 4. go
-RUN chsh -s /bin/zsh root \
+	&& touch /usr/local/lib/python2.7/dist-packages/gerritcheck/check.py \
+	&& chsh -s /bin/zsh root \
 	&& git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
 	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
@@ -127,10 +125,7 @@ RUN chsh -s /bin/zsh root \
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
 	&& cat /tmp/0003-gerrit_checkpatch.patch | patch \
-	&& rm /tmp/*.patch \
-	&& wget https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz \
-	&& tar -C /usr/local -xzf go1.12.4.linux-amd64.tar.gz \
-	&& rm go1.12.4.linux-amd64.tar.gz
+	&& rm /tmp/*.patch
 
 ENV SHELL=/bin/zsh
 COPY startup.sh run_checkpatch.sh run_cppcheck.sh /usr/bin/
