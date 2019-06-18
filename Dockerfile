@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
 	    binfmt-support \
 	    build-essential \
 	    ca-certificates \
+	    clang clang-format clang-tidy clang-tools \
 	    cmake \
 	    cppcheck \
 	    ctags \
