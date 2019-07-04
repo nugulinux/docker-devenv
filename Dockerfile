@@ -54,16 +54,16 @@ RUN apt-get install -y --no-install-recommends \
 	    iputils-ping \
 	    language-pack-en \
 	    less \
-	    libasound2-dev libasound2-dbgsym libasound2-plugins \
+	    libasound2-dev libasound2-plugins \
 	    libconfig-dev \
-	    libcurl4-openssl-dev libcurl4-dbgsym \
+	    libcurl4-openssl-dev \
 	    libglib2.0-dev libglib2.0-0-dbgsym \
 	    libgrpc++-dev \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
 	    libopus-dev libopus-dbg libopus0-dbgsym \
 	    libprotobuf-dev \
-	    libssl-dev libssl1.0.0-dbgsym \
+	    libssl-dev \
 	    libsqlite3-dev libsqlite3-0-dbgsym \
 	    moreutils \
 	    mdbus2 \
@@ -77,6 +77,7 @@ RUN apt-get install -y --no-install-recommends \
 # 3/3
 RUN apt-get install -y --no-install-recommends \
 	    pulseaudio \
+	    qtdeclarative5-dev \
 	    sed \
 	    sqlite3 \
 	    sudo \
