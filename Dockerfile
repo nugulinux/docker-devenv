@@ -74,6 +74,7 @@ RUN apt-get install -y --no-install-recommends \
 # 3/3
 RUN apt-get install -y --no-install-recommends \
 	    pulseaudio \
+	    qtdeclarative5-dev \
 	    sed \
 	    sqlite3 \
 	    sudo \
