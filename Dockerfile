@@ -72,6 +72,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
 	    protobuf-compiler \
 	    protobuf-compiler-grpc \
 	    pulseaudio \
+	    python-dbus \
 	    python-pip \
 	    qemu-user-static \
 	    qtdeclarative5-dev \
