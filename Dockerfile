@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
 	    ca-certificates language-pack-en \
 	    && locale-gen $LC_ALL \
 	    && dpkg-reconfigure locales \
-	    && add-apt-repository -y ppa:webispy/grpc \
+	    && add-apt-repository -y ppa:nugulinux/sdk \
 	    && apt-get update \
 	    && apt-get install -y --no-install-recommends \
 	    apt-utils \
