@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
 	    && echo "deb http://ddebs.ubuntu.com bionic main restricted universe multiverse" >> /etc/apt/sources.list \
 	    && echo "deb http://ddebs.ubuntu.com bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list \
 	    && echo "deb http://ddebs.ubuntu.com bionic-proposed main restricted universe multiverse" >> etc/apt/sources.list \
-	    && add-apt-repository -y ppa:webispy/grpc \
+	    && add-apt-repository -y ppa:nugulinux/sdk \
 	    && apt-get update \
 	    && apt-get install -y --no-install-recommends \
 	    apt-utils \
