@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
 	    libprotobuf-dev \
 	    libssl-dev libssl1.0.0-dbg \
 	    libsqlite3-dev libsqlite3-0-dbg \
+		libqt5webkit5-dev \
 	    man \
 	    minicom \
 	    moreutils \
@@ -73,7 +74,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
 	    python-dbus \
 	    python-pip \
 	    qemu-user-static \
-	    qtdeclarative5-dev \
+		qt5-default \
 	    sbuild \
 	    schroot \
 	    sed \
