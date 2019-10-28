@@ -1,0 +1,19 @@
+language: generic
+dist: xenial
+sudo: required
+services:
+- docker
+install:
+- echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json
+- sudo service docker restart
+- docker system info
+script:
+- docker build --squash -t nugulinux/devenv:bionic .
+before_deploy:
+  - docker images
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+deploy:
+  provider: script
+  script: docker push nugulinux/devenv:bionic
+  on:
+    all_branches: true
