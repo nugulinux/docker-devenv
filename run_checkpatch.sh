@@ -6,5 +6,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 git show --format=email $1 | \
-	checkpatch.pl -q --no-tree - | \
-	checkpatch-to-gerrit-json.py
+	checkpatch.pl -q --no-tree -
