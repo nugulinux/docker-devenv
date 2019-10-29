@@ -1,6 +1,7 @@
 #!/bin/zsh
 
-BANNER=$(cat << "EOF"
+if [ "$#" -eq 1 ] && [ "$1" = "/bin/zsh" ]; then
+	BANNER=$(cat << "EOF"
 
 \e[1;30m -------------------------------------------------- \e[0m
 \e[1;36m   _   _ _    _  _____ _    _  _____ _____  _  __   \e[0m
@@ -36,8 +37,9 @@ Available docker options
 EOF
 )
 
-echo "$BANNER"
-echo
+	echo "$BANNER"
+	echo
+fi
 
 mkdir -p /var/run/dbus
 rm -f /var/run/dbus/pid
