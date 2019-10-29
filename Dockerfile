@@ -1,102 +1,34 @@
 
-FROM ubuntu:bionic
-LABEL maintainer="webispy@gmail.com" \
-      version="0.2" \
-      description="NUGUSDK for Linux development environment"
+FROM nugulinux/devenv:core_bionic
 
-ENV DEBIAN_FRONTEND=noninteractive \
-    LC_ALL=en_US.UTF-8 \
-    LANG=$LC_ALL
-
-RUN apt-get update && apt-get install -y software-properties-common \
-	    ca-certificates language-pack-en ubuntu-dbgsym-keyring \
-	    && locale-gen $LC_ALL \
-	    && dpkg-reconfigure locales \
-	    && echo "deb http://ddebs.ubuntu.com bionic main restricted universe multiverse" >> /etc/apt/sources.list \
-	    && echo "deb http://ddebs.ubuntu.com bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list \
-	    && echo "deb http://ddebs.ubuntu.com bionic-proposed main restricted universe multiverse" >> etc/apt/sources.list \
-	    && add-apt-repository -y ppa:nugulinux/sdk \
-	    && apt-get update \
-	    && apt-get install -y --no-install-recommends \
-	    apt-utils \
-	    binfmt-support \
-	    build-essential \
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
 	    clang clang-format clang-tidy clang-tools \
-	    cmake \
 	    cppcheck \
 	    ctags \
-	    curl \
-	    dbus \
-	    debianutils \
-	    debhelper \
-	    debootstrap \
-	    devscripts \
-	    dh-autoreconf dh-systemd \
-	    diffstat \
-	    dnsutils \
 	    exuberant-ctags \
-	    elfutils \
 	    gdb \
-	    gettext \
-	    git \
 	    gstreamer1.0-tools \
-	    gstreamer1.0-plugins-base \
-	    gstreamer1.0-plugins-good \
 	    gstreamer1.0-plugins-bad \
 	    gstreamer1.0-plugins-ugly \
-	    iputils-ping \
-	    jq \
-	    less \
-	    libasound2-dev libasound2-dbgsym libasound2-plugins \
-	    libcurl4-openssl-dev libcurl4-dbgsym \
-	    libdbus-glib-1-dev \
-	    libglib2.0-dev libglib2.0-0-dbgsym \
-	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
-	    libgstreamer-plugins-base1.0-dev \
-	    libopus-dev libopus-dbg libopus0-dbgsym \
-	    libssl-dev libssl1.0.0-dbgsym \
-	    libsqlite3-dev libsqlite3-0-dbgsym \
 	    libqt5webkit5-dev \
-	    man \
-	    minicom \
-	    moreutils \
 	    mdbus2 \
-	    net-tools \
-	    patch \
-	    pkg-config \
-	    portaudio19-dev \
-	    pulseaudio \
-	    python-dbus \
-	    python-flask-restful \
-	    python-pip \
-	    python-requests-oauthlib \
-	    qemu-user-static \
 	    qt5-default \
-	    sbuild \
-	    schroot \
-	    sed \
-	    sqlite3 \
-	    sudo \
 	    tig \
 	    unzip \
 	    vim \
 	    wget \
 	    xz-utils \
-	    zlib1g-dev \
-	    zsh \
-	    && apt-get clean \
-	    && rm -rf /var/lib/apt/lists/*
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
-COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.gitconfig dotfiles/.tigrc /root/
+COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc /root/
 
 # 1. oh-my-zsh, vim vundle
 # 2. checkpatch
-#    - https://raw.githubusercontent.com/01org/zephyr/master/scripts/checkpatch.pl
-# 3. dbus-daemon-proxy
-RUN chsh -s /bin/zsh root \
-	&& git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
-	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
-	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
+RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth 1 \
+	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting --depth 1 \
+	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1 \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
 	&& mkdir /usr/share/codespell \
@@ -108,14 +40,5 @@ RUN chsh -s /bin/zsh root \
 	&& cd /usr/bin \
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
-	&& rm /tmp/*.patch \
-	&& cd /tmp \
-	&& git clone https://github.com/webispy/dbus-daemon-proxy.git \
-	&& cd dbus-daemon-proxy \
-	&& make && cp dbus-daemon-proxy /usr/bin/ \
-	&& cd .. && rm -rf dbus-daemon-proxy
+	&& rm /tmp/*.patch
 
-ENV SHELL=/bin/zsh
-COPY startup.sh run_checkpatch.sh run_cppcheck.sh /usr/bin/
-ENTRYPOINT ["/usr/bin/startup.sh"]
-CMD ["/bin/zsh"]
