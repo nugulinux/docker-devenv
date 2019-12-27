@@ -23,6 +23,7 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc /root/
+COPY run_codechecker run_codereview.sh /usr/bin/
 
 # 1. oh-my-zsh, vim vundle
 # 2. checkpatch
@@ -40,5 +41,8 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& cd /usr/bin \
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
-	&& rm /tmp/*.patch
+	&& rm /tmp/*.patch \
+	&& pip install setuptools \
+	&& pip install wheel \
+	&& pip install pyyaml
 
