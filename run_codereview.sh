@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
-mkdir -p build
-cd build
+mkdir -p temp_build
+cd temp_build
 
 CLANG_RESULT_FILE="result.log"
 CHECKER_REPORT_FILE="report.json"
@@ -20,4 +20,4 @@ echo "step-4. codechecker report generate to $CHECKER_REPORT_FILE"
 mv $CHECKER_REPORT_FILE ..
 
 cd ..
-rm -rf build
+rm -rf temp_build
