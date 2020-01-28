@@ -44,7 +44,7 @@ RUN apt-get update \
 	    libasound2-dev libasound2-dbgsym libasound2-plugins \
 	    libcurl4-openssl-dev libcurl4-dbgsym \
 	    libdbus-glib-1-dev \
-	    libglib2.0-dev libglib2.0-0-dbgsym \
+	    libglib2.0-dev \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
 	    libnugu-epd-dev libnugu-epd-dbg \
