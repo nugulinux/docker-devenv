@@ -1,5 +1,5 @@
 
-FROM nugulinux/devenv:core_bionic
+FROM nugulinux/devenv:core_focal
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
@@ -12,7 +12,7 @@ RUN apt-get update \
 	    gstreamer1.0-plugins-bad \
 	    gstreamer1.0-plugins-ugly \
 	    libqt5webkit5-dev \
-	    mdbus2 \
+	    libtinfo5 \
 	    qt5-default \
 	    tig \
 	    unzip \
@@ -32,6 +32,10 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1 \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/r/readline/libreadline7_7.0-3_amd64.deb -P /tmp \
+	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/m/mdbus/mdbus2_2.3.3-2_amd64.deb -P /tmp \
+	&& dpkg -i /tmp/libreadline7*.deb /tmp/mdbus2*.deb \
+	&& rm -rf /tmp/*.deb \
 	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
@@ -42,7 +46,7 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
 	&& rm /tmp/*.patch \
-	&& pip install setuptools \
-	&& pip install wheel \
-	&& pip install pyyaml
+	&& pip3 install setuptools \
+	&& pip3 install wheel \
+	&& pip3 install pyyaml
 
