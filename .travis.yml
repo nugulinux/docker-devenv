@@ -8,12 +8,12 @@ install:
 - sudo service docker restart
 - docker system info
 script:
-- docker build --squash -t nugulinux/devenv:core_bionic .
+- docker build --squash -t nugulinux/devenv:core_focal .
 before_deploy:
   - docker images
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 deploy:
   provider: script
-  script: docker push nugulinux/devenv:core_bionic
+  script: docker push nugulinux/devenv:core_focal
   on:
     all_branches: true

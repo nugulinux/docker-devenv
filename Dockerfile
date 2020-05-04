@@ -1,5 +1,5 @@
 
-FROM ubuntu:bionic
+FROM ubuntu:focal
 LABEL maintainer="webispy@gmail.com" \
       version="0.2" \
       description="NUGUSDK for Linux development environment"
@@ -16,10 +16,10 @@ RUN apt-get update \
 	    ubuntu-dbgsym-keyring \
 	&& locale-gen $LC_ALL \
 	&& dpkg-reconfigure locales \
-	&& echo "deb http://ddebs.ubuntu.com bionic main restricted universe multiverse" >> /etc/apt/sources.list \
-	&& echo "deb http://ddebs.ubuntu.com bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list \
-	&& echo "deb http://ddebs.ubuntu.com bionic-proposed main restricted universe multiverse" >> etc/apt/sources.list \
-	&& add-apt-repository -y ppa:nugulinux/sdk \
+	&& echo "deb http://ddebs.ubuntu.com focal main restricted universe multiverse" >> /etc/apt/sources.list \
+	&& echo "deb http://ddebs.ubuntu.com focal-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+	&& echo "deb http://ddebs.ubuntu.com focal-proposed main restricted universe multiverse" >> etc/apt/sources.list \
+#	&& add-apt-repository -y ppa:nugulinux/sdk \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	    apt-utils \
@@ -47,20 +47,20 @@ RUN apt-get update \
 	    libglib2.0-dev \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
-	    libnugu-epd-dev libnugu-epd-dbg \
-	    libnugu-kwd-dev libnugu-kwd-dbg \
-	    libopus-dev libopus-dbg libopus0-dbgsym \
-	    libssl-dev libssl1.0.0-dbgsym \
+#	    libnugu-epd-dev libnugu-epd-dbg \
+#	    libnugu-kwd-dev libnugu-kwd-dbg \
+	    libopus-dev libopus-dbg \
+	    libssl-dev libssl1.1-dbgsym \
 	    moreutils \
 	    net-tools \
 	    patch \
 	    pkg-config \
 	    portaudio19-dev \
 	    pulseaudio \
-	    python-dbus \
-	    python-flask-restful \
-	    python-pip \
-	    python-requests-oauthlib \
+	    python3-dbus \
+	    python3-flask-restful \
+	    python3-pip \
+	    python3-requests-oauthlib \
 	    sed \
 	    zlib1g-dev \
 	    zsh \
