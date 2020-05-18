@@ -2,6 +2,6 @@
 
 mkdir -p /var/run/dbus
 rm -f /var/run/dbus/pid
-dbus-daemon --system
+dbus-daemon --system &
 
 exec "$@"
