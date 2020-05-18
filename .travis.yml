@@ -17,12 +17,12 @@ install:
 - update-binfmts --display
 - docker system info
 script:
-- docker build --squash -t nugulinux/devenv:armhf_bionic .
+- docker build --squash -t nugulinux/devenv:rpi_buster .
 before_deploy:
   - docker images
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 deploy:
   provider: script
-  script: docker push nugulinux/devenv:armhf_bionic
+  script: docker push nugulinux/devenv:rpi_buster
   on:
     all_branches: true
