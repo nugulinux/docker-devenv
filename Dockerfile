@@ -43,6 +43,10 @@ RUN apt-get update && apt-get install -y locales \
 	    vim \
 	    wget \
 	    xz-utils \
+	    && echo "deb http://ppa.launchpad.net/nugulinux/sdk/ubuntu bionic main" > /etc/apt/sources.list.d/nugu.list \
+	    && echo "deb [trusted=yes] https://nugulinux.github.io/sdk-unstable/ubuntu/ bionic main" > /etc/apt/sources.list.d/nugu-unstable.list \
+	    && apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 5DE933034EEA59C4 \
+	    && apt-get update && apt-get install -y libnugu-dev libnugu libnugu-plugins-default libnugu-examples \
 	    && apt-get clean \
 	    && rm -rf /var/lib/apt/lists/*
 
