@@ -17,12 +17,12 @@ install:
 - update-binfmts --display
 - docker system info
 script:
-- docker build --squash -t nugulinux/devenv:rpi_buster .
+- docker build --squash -t nugulinux/devenv:rpi_buster_native .
 before_deploy:
   - docker images
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 deploy:
   provider: script
-  script: docker push nugulinux/devenv:rpi_buster
+  script: docker push nugulinux/devenv:rpi_buster_native
   on:
     all_branches: true
