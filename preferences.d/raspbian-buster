@@ -1,0 +1,3 @@
+Package: *
+Pin: origin archive.raspbian.org
+Pin-Priority: 600
