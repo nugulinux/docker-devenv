@@ -77,6 +77,7 @@ RUN apt-get update && apt-get install -y ca-certificates apt-utils gnupg2 \
         libnugu-kwd-dev:armhf \
         libnugu-dev:armhf \
         wiringpi:armhf \
+	libcairo2-dev:armhf \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm /root/.bashrc \
