@@ -55,11 +55,9 @@ RUN apt-get install -y --no-install-recommends \
 	    libconfig-dev libconfig-dbg \
 	    libcurl4-openssl-dev libcurl3-dbg \
 	    libglib2.0-dev libglib2.0-0-dbg \
-	    libgrpc++-dev \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
 	    libopus-dev libopus-dbg \
-	    libprotobuf-dev \
 	    libssl-dev libssl1.0.0-dbg \
 	    libsqlite3-dev libsqlite3-0-dbg \
 	    moreutils \
@@ -67,9 +65,7 @@ RUN apt-get install -y --no-install-recommends \
 	    net-tools \
 	    patch \
 	    pkg-config \
-	    portaudio19-dev \
-	    protobuf-compiler \
-	    protobuf-compiler-grpc
+	    portaudio19-dev
 
 # 3/3
 RUN apt-get install -y --no-install-recommends \
