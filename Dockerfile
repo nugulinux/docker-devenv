@@ -35,7 +35,7 @@ COPY os-release /usr/lib/
 # armhf APT Repository setup
 # Change the libudev1 version (remove '+rpi1' tag)
 # Fix .bashrc for root
-RUN apt-get update && apt-get install -y ca-certificates apt-utils gnupg2 \
+RUN apt-get update && apt-get upgrade && apt-get install -y ca-certificates apt-utils gnupg2 \
     && echo "deb [arch=armhf] http://archive.raspbian.org/raspbian/ buster main contrib non-free rpi" > /etc/apt/sources.list.d/raspbian_buster.list \
     && echo "deb [arch=armhf] http://archive.raspberrypi.org/debian/ buster main" >> /etc/apt/sources.list.d/raspbian_buster.list \
     && echo "deb https://get-edi.github.io/raspbian-cross-compiler/debian buster-raspbian-cross main" > /etc/apt/sources.list.d/raspbian_cross_repo.list \
@@ -45,10 +45,7 @@ RUN apt-get update && apt-get install -y ca-certificates apt-utils gnupg2 \
     && apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 9165938D90FDDD2E \
     && apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 5DE933034EEA59C4 \
     && apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 82B129927FA3303E \
-    && dpkg --add-architecture armhf \
-    && apt-get update \
-    && apt-cache policy \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install -y \
         cmake \
         git \
         patch \
@@ -56,6 +53,10 @@ RUN apt-get update && apt-get install -y ca-certificates apt-utils gnupg2 \
         sed \
         vim \
         wget \
+    && dpkg --add-architecture armhf \
+    && apt-get update \
+    && apt-cache policy \
+    && apt-get install -y \
         crossbuild-essential-armhf \
         libc6:armhf \
     && cd /tmp && mkdir patched \
@@ -64,7 +65,7 @@ RUN apt-get update && apt-get install -y ca-certificates apt-utils gnupg2 \
     && sed -i 's/Version: 241-7~deb10u4+rpi1/Version: 241-7~deb10u4/' patched/DEBIAN/control \
     && dpkg-deb -b patched/ patched.deb \
     && dpkg -i --force-overwrite patched.deb \
-    && apt-get install -y \
+    && apt-get install -y --allow-downgrades \
         libglib2.0-dev:armhf \
         libopus-dev:armhf \
         portaudio19-dev:armhf \
