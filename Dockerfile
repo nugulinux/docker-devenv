@@ -60,6 +60,6 @@ RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.v
 # fix root .bashrc
 RUN rm /root/.bashrc && ln -s /etc/skel/.bashrc /root/
 
-COPY startup.sh run_checkpatch.sh run_cppcheck.sh /usr/bin/
+COPY startup.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/startup.sh"]
 CMD ["/bin/bash"]
