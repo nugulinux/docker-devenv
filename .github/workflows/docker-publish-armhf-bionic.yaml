@@ -1,0 +1,21 @@
+name: Docker publish - armhf_bionic
+
+on:
+  push:
+
+env:
+  IMAGE_NAME: nugulinux/devenv:armhf_bionic
+
+jobs:
+  build:
+    runs-on: [ self-hosted, Linux, X64 ]
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2
+    - name: Build image
+      run: docker build --squash -t $IMAGE_NAME .
+    - name: Docker login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish
+      run: docker push $IMAGE_NAME
+
