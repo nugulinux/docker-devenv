@@ -35,7 +35,7 @@ COPY os-release /usr/lib/
 # armhf APT Repository setup
 # Change the libudev1 version (remove '+rpi1' tag)
 # Fix .bashrc for root
-RUN apt-get update && apt-get upgrade && apt-get install -y ca-certificates apt-utils gnupg2 \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y ca-certificates apt-utils gnupg2 \
     && echo "deb [arch=armhf] http://archive.raspbian.org/raspbian/ buster main contrib non-free rpi" > /etc/apt/sources.list.d/raspbian_buster.list \
     && echo "deb [arch=armhf] http://archive.raspberrypi.org/debian/ buster main" >> /etc/apt/sources.list.d/raspbian_buster.list \
     && echo "deb https://get-edi.github.io/raspbian-cross-compiler/debian buster-raspbian-cross main" > /etc/apt/sources.list.d/raspbian_cross_repo.list \
