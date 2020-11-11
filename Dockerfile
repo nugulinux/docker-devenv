@@ -1,5 +1,5 @@
 
-FROM nugulinux/devenv:core
+FROM nugulinux/devenv:core_xenial
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
@@ -24,6 +24,7 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc /root/
+COPY patches/* /tmp/
 
 # 1. oh-my-zsh, vim vundle
 # 2. checkpatch
@@ -37,8 +38,6 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
 	&& chmod +x /usr/bin/checkpatch.pl \
-	&& wget https://raw.githubusercontent.com/nugulinux/docker-devenv/master/patches/0001-checkpatch-add-option-for-excluding-directories.patch -P /tmp/ \
-	&& wget https://raw.githubusercontent.com/nugulinux/docker-devenv/master/patches/0002-ignore_const_struct_warning.patch -P /tmp/ \
 	&& cd /usr/bin \
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
