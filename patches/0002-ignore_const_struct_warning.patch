@@ -1,13 +1,15 @@
---- checkpatch.pl	2019-03-05 19:04:46.000000000 +0900
-+++ checkpatch.pl	2019-03-05 19:04:30.000000000 +0900
-@@ -748,8 +748,8 @@
+diff --git a/checkpatch.pl b/checkpatch.pl
+index f88971b..847373a 100644
+--- a/checkpatch.pl
++++ b/checkpatch.pl
+@@ -779,8 +779,8 @@ sub read_words {
+
+ my $const_structs;
+ if (show_type("CONST_STRUCT")) {
+-	read_words(\$const_structs, $conststructsfile)
+-	    or warn "No structs that should be const will be found - file '$conststructsfile': $!\n";
++	read_words(\$const_structs, $conststructsfile);
++	#    or warn "No structs that should be const will be found - file '$conststructsfile': $!\n";
  }
- 
- my $const_structs = "";
--read_words(\$const_structs, $conststructsfile)
--    or warn "No structs that should be const will be found - file '$conststructsfile': $!\n";
-+read_words(\$const_structs, $conststructsfile);
-+#    or warn "No structs that should be const will be found - file '$conststructsfile': $!\n";
- 
- my $typeOtherTypedefs = "";
- if (length($typedefsfile)) {
+
+ if (defined($typedefsfile)) {
