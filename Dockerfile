@@ -56,16 +56,10 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y ca-certificates a
     && dpkg --add-architecture armhf \
     && apt-get update \
     && apt-cache policy \
-    && apt-get install -y \
+    && apt-get install -y --allow-downgrades \
         crossbuild-essential-armhf \
         libc6:armhf \
-    && cd /tmp && mkdir patched \
-    && apt download libudev1:armhf \
-    && dpkg-deb -R libudev*.deb patched \
-    && sed -i 's/Version: 241-7~deb10u4+rpi1/Version: 241-7~deb10u4/' patched/DEBIAN/control \
-    && dpkg-deb -b patched/ patched.deb \
-    && dpkg -i --force-overwrite patched.deb \
-    && apt-get install -y --allow-downgrades \
+        libudev1:armhf \
         libglib2.0-dev:armhf \
         libopus-dev:armhf \
         portaudio19-dev:armhf \
@@ -78,7 +72,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y ca-certificates a
         libnugu-kwd-dev:armhf \
         libnugu-dev:armhf \
         wiringpi:armhf \
-	libcairo2-dev:armhf \
+        libcairo2-dev:armhf \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm /root/.bashrc \
