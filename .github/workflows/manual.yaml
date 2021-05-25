@@ -1,0 +1,17 @@
+name: Manual
+on:
+  workflow_dispatch:
+    inputs:
+      comment:
+        description: 'Comment'
+        required: false
+        default: ''
+
+jobs:
+  guide:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Guide
+        run: |
+          echo "Comment ${{ github.event.inputs.comment }}"
+          echo "Please select another branch."
