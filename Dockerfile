@@ -19,6 +19,7 @@ RUN apt-get update \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	    apt-utils \
+	    apt-transport-https \
 	    build-essential \
 	    cmake \
 	    curl \
