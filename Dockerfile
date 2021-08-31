@@ -12,9 +12,7 @@ RUN apt-get update \
 	    gstreamer1.0-plugins-bad \
 	    gstreamer1.0-plugins-ugly \
 	    gstreamer1.0-pulseaudio \
-	    libqt5webkit5-dev \
 	    mdbus2 \
-	    qt5-default \
 	    tig \
 	    unzip \
 	    vim \
