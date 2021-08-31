@@ -50,7 +50,7 @@ RUN apt-get update \
 	    libnugu-epd-dev libnugu-epd-dbg \
 	    libnugu-kwd-dev libnugu-kwd-dbg \
 	    libopus-dev libopus-dbg libopus0-dbgsym \
-	    libssl-dev libssl1.0.0-dbgsym \
+	    libssl-dev \
 	    moreutils \
 	    net-tools \
 	    patch \
