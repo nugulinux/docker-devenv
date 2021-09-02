@@ -48,6 +48,7 @@ RUN apt-get update \
 	    libnugu-kwd-dev libnugu-kwd-dbg \
 	    libopus-dev libopus-dbg \
 	    libssl-dev libssl1.0.0-dbg \
+	    libsqlite3-dev \
 	    moreutils \
 	    net-tools \
 	    patch \
