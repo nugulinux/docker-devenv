@@ -1,11 +1,7 @@
-name: Manual
+name: Docker publish - focal
+
 on:
-  workflow_dispatch:
-    inputs:
-      comment:
-        description: 'Comment'
-        required: false
-        default: ''
+  push:
 
 jobs:
   build:

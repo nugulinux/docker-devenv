@@ -12,9 +12,7 @@ RUN apt-get update \
 	    gstreamer1.0-plugins-bad \
 	    gstreamer1.0-plugins-ugly \
 	    gstreamer1.0-pulseaudio \
-	    libqt5webkit5-dev \
 	    libtinfo5 \
-	    qt5-default \
 	    tig \
 	    unzip \
 	    vim \
@@ -34,10 +32,6 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1 \
 	&& ls -la ~/ \
 	&& vim +PluginInstall +qall \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/main/r/readline/libreadline7_7.0-3_amd64.deb -P /tmp \
-	&& wget http://ftp.kaist.ac.kr/ubuntu/pool/universe/m/mdbus/mdbus2_2.3.3-2_amd64.deb -P /tmp \
-	&& dpkg -i /tmp/libreadline7*.deb /tmp/mdbus2*.deb \
-	&& rm -rf /tmp/*.deb \
 	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
