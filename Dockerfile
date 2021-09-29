@@ -19,7 +19,7 @@ RUN apt-get update \
 	&& echo "deb http://ddebs.ubuntu.com focal main restricted universe multiverse" >> /etc/apt/sources.list \
 	&& echo "deb http://ddebs.ubuntu.com focal-updates main restricted universe multiverse" >> /etc/apt/sources.list \
 	&& echo "deb http://ddebs.ubuntu.com focal-proposed main restricted universe multiverse" >> etc/apt/sources.list \
-#	&& add-apt-repository -y ppa:nugulinux/sdk \
+	&& add-apt-repository -y ppa:nugulinux/sdk \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	    apt-utils \
@@ -47,10 +47,11 @@ RUN apt-get update \
 	    libglib2.0-dev \
 	    libgstreamer1.0-dev libgstreamer1.0-0-dbg \
 	    libgstreamer-plugins-base1.0-dev \
-#	    libnugu-epd-dev libnugu-epd-dbg \
-#	    libnugu-kwd-dev libnugu-kwd-dbg \
+	    libnugu-epd-dev libnugu-epd-dbg \
+	    libnugu-kwd-dev libnugu-kwd-dbg \
 	    libopus-dev libopus-dbg \
-	    libssl-dev libssl1.1-dbgsym \
+	    libssl-dev \
+	    libsqlite3-dev \
 	    moreutils \
 	    net-tools \
 	    patch \
