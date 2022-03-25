@@ -12,6 +12,9 @@ RUN apt-get update \
 	    gstreamer1.0-plugins-bad \
 	    gstreamer1.0-plugins-ugly \
 	    gstreamer1.0-pulseaudio \
+		libpulse-dev \
+		libpulse-mainloop-glib0 \
+		libsqlite3-dev \
 	    mdbus2 \
 	    tig \
 	    unzip \
