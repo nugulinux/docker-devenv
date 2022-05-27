@@ -2,19 +2,42 @@
 FROM nugulinux/devenv:core_focal
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends \
-	    clang clang-format clang-tidy clang-tools \
+	&& apt-get update && apt-get install -y --no-install-recommends \
+	    apt-utils \
+	    automake \
+	    clang-format clang-tidy clang-tools \
 	    cppcheck \
 	    ctags \
+	    debianutils \
+	    debhelper \
+	    debootstrap \
+	    devscripts \
+	    diffstat \
+	    dh-autoreconf dh-systemd \
+	    dnsutils \
+	    elfutils \
 	    exuberant-ctags \
 	    gdb \
 	    gstreamer1.0-tools \
 	    gstreamer1.0-plugins-bad \
+	    gstreamer1.0-plugins-base \
+	    gstreamer1.0-plugins-good \
 	    gstreamer1.0-plugins-ugly \
 	    gstreamer1.0-pulseaudio \
+	    iputils-ping \
+	    jq \
+	    less \
+	    libnugu-epd-dbg \
+	    libnugu-kwd-dbg \
+	    libreadline-dev \
 	    libtinfo5 \
+	    libtool \
+	    moreutils \
+	    net-tools \
 	    tig \
+	    pulseaudio \
 	    unzip \
+	    valac \
 	    vim \
 	    wget \
 	    xz-utils \
@@ -24,9 +47,11 @@ RUN apt-get update \
 COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc /root/
 COPY run_codechecker run_codereview.sh /usr/bin/
 COPY patches/* /tmp/
+COPY install_ddebs.sh /usr/bin/
 
 # 1. oh-my-zsh, vim vundle
 # 2. checkpatch
+# 3. mdbus2
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth 1 \
 	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting --depth 1 \
 	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1 \
@@ -40,7 +65,7 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
 	&& rm /tmp/*.patch \
-	&& pip3 install setuptools \
-	&& pip3 install wheel \
-	&& pip3 install pyyaml
+	&& cd /tmp && git clone https://github.com/freesmartphone/mdbus.git && cd mdbus \
+	&& ./autogen.sh --prefix=/usr && make install \
+	&& rm -rf /tmp/mdbus
 
