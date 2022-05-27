@@ -1,5 +1,5 @@
 
-FROM nugulinux/devenv:core_focal
+FROM nugulinux/devenv:core_jammy
 
 RUN apt-get update \
 	&& apt-get update && apt-get install -y --no-install-recommends \
@@ -7,16 +7,14 @@ RUN apt-get update \
 	    automake \
 	    clang-format clang-tidy clang-tools \
 	    cppcheck \
-	    ctags \
 	    debianutils \
 	    debhelper \
 	    debootstrap \
 	    devscripts \
 	    diffstat \
-	    dh-autoreconf dh-systemd \
+	    dh-autoreconf \
 	    dnsutils \
 	    elfutils \
-	    exuberant-ctags \
 	    gdb \
 	    gstreamer1.0-tools \
 	    gstreamer1.0-plugins-bad \
@@ -36,6 +34,7 @@ RUN apt-get update \
 	    net-tools \
 	    tig \
 	    pulseaudio \
+	    universal-ctags \
 	    unzip \
 	    valac \
 	    vim \
@@ -65,7 +64,7 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
 	&& rm /tmp/*.patch \
-	&& cd /tmp && git clone https://github.com/freesmartphone/mdbus.git && cd mdbus \
+	&& cd /tmp && git clone https://github.com/webispy/mdbus.git && cd mdbus \
 	&& ./autogen.sh --prefix=/usr && make install \
 	&& rm -rf /tmp/mdbus
 
