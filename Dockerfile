@@ -1,5 +1,5 @@
 
-FROM ubuntu:focal
+FROM ubuntu:jammy
 LABEL maintainer="webispy@gmail.com" \
       version="0.3" \
       description="Linux development environment for NUGU SDK"
@@ -10,6 +10,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	    ca-certificates \
+	    gpg-agent \
 	    software-properties-common \
 	&& add-apt-repository -y ppa:nugulinux/sdk \
 	&& apt-get update \
