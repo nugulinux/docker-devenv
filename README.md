@@ -13,6 +13,9 @@
 * `nugulinux/devenv:core_focal` (branch: [core_focal](https://github.com/nugulinux/docker-devenv/tree/core_focal))
   [![Build Status](https://github.com/nugulinux/docker-devenv/workflows/Docker%20publish%20-%20core_focal/badge.svg)](https://github.com/nugulinux/docker-devenv/actions?query=workflow%3A%22Docker+publish+-+core_focal%22)
 
+* `nugulinux/devenv:core_jammy` (branch: [core_jammy](https://github.com/nugulinux/docker-devenv/tree/core_jammy))
+  [![Build Status](https://github.com/nugulinux/docker-devenv/workflows/Docker%20publish%20-%20core_jammy/badge.svg)](https://github.com/nugulinux/docker-devenv/actions?query=workflow%3A%22Docker+publish+-+core_jammy%22)
+
 ## Development environment images
 
 * `nugulinux/devenv:xenial` (branch: [xenial](https://github.com/nugulinux/docker-devenv/tree/xenial))
@@ -23,6 +26,9 @@
 
 * `nugulinux/devenv:focal` (branch: [focal](https://github.com/nugulinux/docker-devenv/tree/focal))
   [![Build Status](https://github.com/nugulinux/docker-devenv/workflows/Docker%20publish%20-%20focal/badge.svg)](https://github.com/nugulinux/docker-devenv/actions?query=workflow%3A%22Docker+publish+-+focal%22)
+
+* `nugulinux/devenv:jammy` (branch: [jammy](https://github.com/nugulinux/docker-devenv/tree/jammy))
+  [![Build Status](https://github.com/nugulinux/docker-devenv/workflows/Docker%20publish%20-%20jammy/badge.svg)](https://github.com/nugulinux/docker-devenv/actions?query=workflow%3A%22Docker+publish+-+jammy%22)
 
 ## Arm64/Armhf native images
 
