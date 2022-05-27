@@ -2,21 +2,41 @@
 FROM nugulinux/devenv:core_bionic
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends \
-	    clang clang-format clang-tidy clang-tools \
+	&& apt-get update && apt-get install -y --no-install-recommends \
+	    apt-utils \
+	    clang-format clang-tidy clang-tools \
 	    cppcheck \
 	    ctags \
+	    debianutils \
+	    debhelper \
+	    debootstrap \
+	    devscripts \
+	    diffstat \
+	    dh-autoreconf dh-systemd \
+	    dnsutils \
+	    elfutils \
 	    exuberant-ctags \
 	    gdb \
 	    gstreamer1.0-tools \
 	    gstreamer1.0-plugins-bad \
+	    gstreamer1.0-plugins-base \
+	    gstreamer1.0-plugins-good \
 	    gstreamer1.0-plugins-ugly \
 	    gstreamer1.0-pulseaudio \
-		libpulse-dev \
-		libpulse-mainloop-glib0 \
-		libsqlite3-dev \
+	    iputils-ping \
+	    jq \
+	    less \
+	    libnugu-epd-dbg \
+	    libnugu-kwd-dbg \
 	    mdbus2 \
+	    moreutils \
+	    net-tools \
 	    tig \
+	    pulseaudio \
+	    python-dbus \
+	    python-flask-restful \
+	    python-pip \
+	    python-requests-oauthlib \
 	    unzip \
 	    vim \
 	    wget \
@@ -27,6 +47,7 @@ RUN apt-get update \
 COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc /root/
 COPY run_codechecker run_codereview.sh /usr/bin/
 COPY patches/* /tmp/
+COPY install_ddebs.sh /usr/bin/
 
 # 1. oh-my-zsh, vim vundle
 # 2. checkpatch
