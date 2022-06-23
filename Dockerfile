@@ -33,10 +33,10 @@ RUN apt-get update \
 	    net-tools \
 	    tig \
 	    pulseaudio \
-	    python-dbus \
-	    python-flask-restful \
-	    python-pip \
-	    python-requests-oauthlib \
+	    python3-dbus \
+	    python3-flask-restful \
+	    python3-pip \
+	    python3-requests-oauthlib \
 	    unzip \
 	    vim \
 	    wget \
@@ -64,7 +64,7 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& cat /tmp/0001-checkpatch-add-option-for-excluding-directories.patch | patch \
 	&& cat /tmp/0002-ignore_const_struct_warning.patch | patch \
 	&& rm /tmp/*.patch \
-	&& pip install setuptools \
-	&& pip install wheel \
-	&& pip install pyyaml
+	&& pip3 install setuptools \
+	&& pip3 install wheel \
+	&& pip3 install pyyaml
 
