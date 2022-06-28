@@ -36,6 +36,10 @@ RUN apt-get update \
 	    net-tools \
 	    tig \
 	    pulseaudio \
+	    python3-dbus \
+	    python3-flask-restful \
+	    python3-pip \
+	    python3-requests-oauthlib \
 	    unzip \
 	    valac \
 	    vim \
@@ -68,4 +72,3 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& cd /tmp && git clone https://github.com/freesmartphone/mdbus.git && cd mdbus \
 	&& ./autogen.sh --prefix=/usr && make install \
 	&& rm -rf /tmp/mdbus
-
