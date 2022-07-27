@@ -11,7 +11,7 @@ echo "step-1. generate compile_commands.json"
 cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../ > /dev/null
 
 echo "step-2. run clang-tidy tools"
-run-clang-tidy -checks='-*,clang*,perf*,cert*' > $CLANG_RESULT_FILE 2> /dev/null
+run-clang-tidy -checks='-*,clang*,perf*,cert*' > $CLANG_RESULT_FILE
 
 echo "step-3. run code checker"
 run_codechecker $CLANG_RESULT_FILE $@
