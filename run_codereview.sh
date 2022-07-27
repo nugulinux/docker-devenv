@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 
 mkdir -p temp_build
 cd temp_build
@@ -14,6 +13,7 @@ echo "step-2. run clang-tidy tools"
 run-clang-tidy -checks='-*,clang*,perf*,cert*' > $CLANG_RESULT_FILE
 
 echo "step-3. run code checker"
+set -e
 run_codechecker $CLANG_RESULT_FILE $@
 
 echo "step-4. codechecker report generate to $CHECKER_REPORT_FILE"

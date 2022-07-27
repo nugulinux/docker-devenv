@@ -127,7 +127,7 @@ def main():
 
         if len(sys.argv) < 3:
             print("# run_codechecker [tidy_result.log] [repo_slug] [exclusive_file1] [exclusive_fileN]")
-            return -1
+            sys.exit(-1)
 
         REPO = REPO_SLUG = sys.argv[2]
         sp = REPO_SLUG.split("/")
@@ -144,7 +144,7 @@ def main():
 
     except Exception as e:
         print("# run_codechecker [tidy_result.log] [repo_slug] [exclusive_file1] [exclusive_fileN]")
-        return -1
+        sys.exit(-1)
     else:
         return run_code_checker(sys.argv[1])
 
