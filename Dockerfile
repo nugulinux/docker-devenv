@@ -52,14 +52,14 @@ COPY run_codechecker run_codereview.sh /usr/bin/
 COPY patches/* /tmp/
 COPY install_ddebs.sh /usr/bin/
 
-# 1. oh-my-zsh, vim vundle
+# 1. oh-my-zsh, vim-plug
 # 2. checkpatch
 # 3. mdbus2
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth 1 \
 	&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting --depth 1 \
-	&& git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1 \
+	&& curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
 	&& ls -la ~/ \
-	&& vim +PluginInstall +qall \
+	&& vim +PlugInstall +qall \
 	&& mkdir /usr/share/codespell \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/checkpatch.pl -P /usr/bin/ \
 	&& wget --no-check-certificate https://raw.githubusercontent.com/torvalds/linux/master/scripts/spelling.txt -P /usr/bin/ \
