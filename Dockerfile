@@ -25,6 +25,7 @@ RUN apt-get update \
 	    gstreamer1.0-pulseaudio \
 	    iputils-ping \
 	    jq \
+		rapidjson-dev \
 	    less \
 	    libnugu-epd-dbg \
 	    libnugu-kwd-dbg \
