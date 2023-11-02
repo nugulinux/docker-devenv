@@ -5,7 +5,8 @@ RUN apt-get update \
 	&& apt-get update && apt-get install -y --no-install-recommends \
 	    apt-utils \
 	    automake \
-	    clang-format clang-tidy clang-tools \
+	    clang clang-format clang-tidy clang-tools \
+	    colorized-logs \
 	    cppcheck \
 	    debianutils \
 	    debhelper \
@@ -24,7 +25,7 @@ RUN apt-get update \
 	    gstreamer1.0-pulseaudio \
 	    iputils-ping \
 	    jq \
-		rapidjson-dev \
+	    rapidjson-dev \
 	    less \
 	    libnugu-epd-dbg \
 	    libnugu-kwd-dbg \
@@ -48,7 +49,7 @@ RUN apt-get update \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc /root/
+COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc dotfiles/.clang-tidy /root/
 COPY run_codechecker run_codereview.sh /usr/bin/
 COPY patches/* /tmp/
 COPY install_ddebs.sh /usr/bin/
@@ -71,4 +72,5 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& rm /tmp/*.patch \
 	&& cd /tmp && git clone https://github.com/webispy/mdbus.git && cd mdbus \
 	&& ./autogen.sh --prefix=/usr && make install \
-	&& rm -rf /tmp/mdbus
+	&& rm -rf /tmp/mdbus \
+	&& cp /root/.clang-tidy /
