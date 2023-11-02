@@ -1,0 +1,19 @@
+# Default
+#  - Disable all
+# Enable
+#  - clang*
+#  - perf*
+#  - cert*
+# Exclude
+#  - performance-no-int-to-ptr
+#  - cert-dcl37-c
+#  - cert-dcl51-cpp
+Checks: '-*,
+	clang*,
+	perf*,
+	cert*,
+	-performance-no-int-to-ptr,
+	-cert-dcl37-c,
+	-cert-dcl51-cpp'
+CheckOptions:
+InheritParentConfig: true

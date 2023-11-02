@@ -4,7 +4,8 @@ FROM nugulinux/devenv:core_bionic
 RUN apt-get update \
 	&& apt-get update && apt-get install -y --no-install-recommends \
 	    apt-utils \
-	    clang-format clang-tidy clang-tools \
+	    clang clang-format clang-tidy clang-tools \
+	    colorized-logs \
 	    cppcheck \
 	    ctags \
 	    debianutils \
@@ -25,7 +26,7 @@ RUN apt-get update \
 	    gstreamer1.0-pulseaudio \
 	    iputils-ping \
 	    jq \
-		rapidjson-dev \
+	    rapidjson-dev \
 	    less \
 	    libnugu-epd-dbg \
 	    libnugu-kwd-dbg \
@@ -45,7 +46,7 @@ RUN apt-get update \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc /root/
+COPY dotfiles/.vimrc dotfiles/.zshrc dotfiles/.tigrc dotfiles/.clang-tidy /root/
 COPY run_codechecker run_codereview.sh /usr/bin/
 COPY patches/* /tmp/
 COPY install_ddebs.sh /usr/bin/
@@ -67,5 +68,6 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh --depth
 	&& rm /tmp/*.patch \
 	&& pip3 install setuptools \
 	&& pip3 install wheel \
-	&& pip3 install pyyaml
+	&& pip3 install pyyaml \
+	&& cp /root/.clang-tidy /
 
